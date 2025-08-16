@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMB SQUARE - Pro Version</title>
+<link rel="stylesheet" type="favcon.jpg" href="favcon.jpg">
+<style>
+/* ===== RESET ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; scroll-behavior:smooth;}
+body { background:#f4f4f4; color:#333; line-height:1.6; transition: background 0.3s,color 0.3s;}
+a { text-decoration:none; color:inherit; }
+
+/* ===== HEADER ===== */
+header { position:sticky; top:0; z-index:1000; background:#222; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:15px 50px; transition:0.3s; }
+header.sticky { background:#111; }
+header .logo { font-size:24px; font-weight:bold; cursor:pointer;}
+header nav ul { list-style:none; display:flex; gap:20px; }
+header nav ul li a { padding:5px 10px; transition:0.3s; border-radius:5px; }
+header nav ul li a:hover, header nav ul li a.active { background:#ff4a57; color:#fff; }
+
+/* ===== HERO ===== */
+.hero { text-align:center; padding:140px 20px; color:#fff; position:relative; overflow:hidden;}
+.hero::before { content:""; position:absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(120deg, #ff4a57, #ff914d, #ff4a57, #ff914d); background-size:400% 400%; animation:bgAnimate 15s ease infinite; z-index:-1;}
+@keyframes bgAnimate{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+.hero h1 { font-size:48px; margin-bottom:15px; opacity:0; transform:translateY(-50px); animation:fadeInDown 1s forwards; }
+.hero p { font-size:20px; margin-bottom:25px; opacity:0; transform:translateY(50px); animation:fadeInUp 1s forwards 0.5s; }
+.hero .btn { padding:12px 25px; background:#fff; color:#ff4a57; border-radius:5px; font-weight:bold; transition:0.3s; }
+.hero .btn:hover { background:#ff4a57; color:#fff; }
+
+/* ===== SECTIONS ===== */
+.section { padding:60px 20px; text-align:center; }
+.features, .services { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; }
+.feature, .service { background:#fff; padding:25px; border-radius:10px; flex:1 1 250px; max-width:300px; box-shadow:0 8px 20px rgba(0,0,0,0.1); transition:transform 0.3s,opacity 0.5s; opacity:0; transform:translateY(50px);}
+.feature.visible, .service.visible{opacity:1; transform:translateY(0);}
+.feature h2, .service h2 { margin-bottom:10px; color:#ff4a57; }
+
+/* ===== ABOUT ===== */
+.about-section { background:#f9f9f9; }
+.about-section h1 { margin-bottom:20px; color:#ff4a57; }
+
+/* ===== SERVICES SLIDER ===== */
+.slider { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:20px; padding:20px; }
+.slider::-webkit-scrollbar{display:none;}
+.slide { flex:0 0 250px; scroll-snap-align:start; background:#fff; padding:20px; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.1); transition:transform 0.3s; }
+.slide:hover{ transform:scale(1.05); }
+
+/* ===== CONTACT ===== */
+.contact-section { background:#fff; }
+.contact-section form { max-width:500px; margin:auto; display:flex; flex-direction:column; gap:15px; }
+.contact-section input, .contact-section textarea { padding:12px; border-radius:5px; border:1px solid #ccc; outline:none; transition:0.3s; }
+.contact-section input:focus, .contact-section textarea:focus { border-color:#ff4a57; }
+.contact-section button { padding:12px; border:none; border-radius:5px; background:#ff4a57; color:#fff; font-weight:bold; cursor:pointer; transition:0.3s; }
+.contact-section button:hover { background:#e03f4b; }
+
+/* ===== FOOTER ===== */
+footer { background:#222; color:#fff; text-align:center; padding:20px 0; }
+footer .social { margin-top:10px; display:flex; justify-content:center; gap:15px; }
+footer .social a { color:#fff; font-size:20px; transition:0.3s; }
+footer .social a:hover{ color:#ff4a57; }
+
+/* ===== BACK TO TOP ===== */
+#backToTop { position:fixed; bottom:30px; right:30px; padding:10px 15px; background:#ff4a57; color:#fff; border-radius:50px; cursor:pointer; display:none; transition:0.3s; z-index:1000; }
+#backToTop:hover { background:#e03f4b; }
+
+/* ===== DARK MODE ===== */
+body.dark { background:#121212; color:#f4f4f4; }
+body.dark header { background:#000; }
+body.dark .feature, body.dark .service, body.dark .contact-section form, body.dark .slide { background:#1e1e1e; color:#f4f4f4; }
+body.dark .hero .btn { background:#ff4a57; color:#fff; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInDown { to{opacity:1; transform:translateY(0);} from{opacity:0; transform:translateY(-50px);} }
+@keyframes fadeInUp { to{opacity:1; transform:translateY(0);} from{opacity:0; transform:translateY(50px);} }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){ header{flex-direction:column; gap:10px;} .features, .services, .slider{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<header id="header">
+    <div class="logo" onclick="scrollToTop()">MMB SQUARE</div>
+    <nav>
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#" id="darkModeToggle">🌙</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <h1>Welcome to MMB SQUARE</h1>
+    <p>Your one-stop solution for modern web development</p>
+    <a href="#services" class="btn">Our Services</a>
+</section>
+
+<section id="features" class="section features">
+    <div class="feature"> <h2>Responsive Design</h2><p>Looks amazing on any device.</p> </div>
+    <div class="feature"> <h2>Fast & Optimized</h2><p>Speedy websites with best performance.</p> </div>
+    <div class="feature"> <h2>SEO Friendly</h2><p>Boost your search engine ranking.</p> </div>
+</section>
+
+<section id="about" class="section about-section">
+    <h1>About Us</h1>
+    <p>We are a passionate web development team building stunning, modern websites that help businesses grow online.</p>
+</section>
+
+<section id="services" class="section">
+    <h1>Our Services</h1>
+    <div class="slider">
+        <div class="slide">Web Design<br>Beautiful responsive designs</div>
+        <div class="slide">Web Development<br>Full-stack modern web solutions</div>
+        <div class="slide">SEO Optimization<br>Improve visibility and ranking</div>
+        <div class="slide">E-commerce Solutions<br>Online store development</div>
+    </div>
+</section>
+
+<section id="contact" class="section contact-section">
+    <h1>Contact Us</h1>
+    <form id="contactForm">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<footer>
+    <p>&copy; 2025 MMB SQUARE. All rights reserved.</p>
+    <div class="social">
+        <a href="#">🌐</a>
+        <a href="#">🐦</a>
+        <a href="#">📘</a>
+        <a href="#">📸</a>
+    </div>
+</footer>
+
+<div id="backToTop" onclick="scrollToTop()">↑</div>
+
+<script>
+// Smooth scroll & active link
+const navLinks=document.querySelectorAll('header nav ul li a');
+navLinks.forEach(link=>{ link.addEventListener('click',function(e){ if(this.hash){ e.preventDefault(); document.querySelector(this.hash).scrollIntoView({behavior:'smooth'}); navLinks.forEach(a=>a.classList.remove('active')); this.classList.add('active'); } }); });
+
+// Sticky header
+const header=document.getElementById('header');
+window.addEventListener('scroll',()=>{ window.scrollY>50?header.classList.add('sticky'):header.classList.remove('sticky'); });
+
+// Back to top button
+const backToTop=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{ window.scrollY>300?backToTop.style.display='block':backToTop.style.display='none'; });
+function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+// Dark mode toggle
+const darkToggle=document.getElementById('darkModeToggle');
+darkToggle.addEventListener('click',()=>{ document.body.classList.toggle('dark'); darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙'; });
+
+// Contact form
+document.getElementById('contactForm').addEventListener('submit',function(e){ e.preventDefault(); alert("Thank you! Your message has been sent."); this.reset(); });
+
+// Scroll animation for features & services
+const fElements=document.querySelectorAll('.feature,.slide');
+const observer=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('visible'); } }); },{threshold:0.1});
+fElements.forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
